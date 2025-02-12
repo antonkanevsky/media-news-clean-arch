@@ -1,0 +1,44 @@
+services:
+  php:
+    build:
+      context: .
+      target: php
+    container_name: media-app-php
+    volumes:
+      - .:/var/www/html
+    environment:
+      - PHP_IDE_CONFIG=serverName=media_debug
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17-alpine3.21
+    volumes:
+      - media-database:/var/lib/postgresql/data/media
+    environment:
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=8012345108gY
+      - PGDATA=/var/lib/postgresql/data/media
+      - POSTGRES_DB=media
+    ports:
+      - 5432:5432
+
+  nginx:
+    build:
+      context: .
+      target: nginx
+    container_name: media-app-nginx
+    environment:
+      - LISTEN_PORT=8082
+      - FASTCGI_HOST=php
+      - FASTCGI_PORT=9000
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - php
+    ports:
+      - "8083:8082"
+
+volumes:
+  media-database:
+    driver: local
