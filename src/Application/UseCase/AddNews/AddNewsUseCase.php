@@ -34,7 +34,7 @@ readonly class AddNewsUseCase
         try {
             $newsDownloaderResult = $this->newsDownloader->downloadNews($request->url);
         } catch (DownloaderFailureException $e) {
-            throw new AddNewsUseCaseException($e->getMessage(), $e->getCode(), $e);
+            throw new AddNewsUseCaseException('Error downloading news.', $e->getCode(), $e);
         }
 
         $newsExtractorResult = $this->newsContentExtractor->extract($newsDownloaderResult->urlContent);

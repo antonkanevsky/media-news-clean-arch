@@ -18,10 +18,14 @@ class News
 
     private \DateTimeImmutable $createdAt;
 
-    public function __construct(Url $url, string $title)
+    public function __construct(string $url, string $title)
     {
         $this->id = Uuid::uuid7();
-        $this->url = $url->value;
+
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            throw new \InvalidArgumentException('Invalid URL');
+        }
+        $this->url = $url;
         $this->title = $title;
         $this->createdAt = new \DateTimeImmutable();
     }
