@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Infrastructure\Http\Controller;
 
 use App\Application\Exception\UseCase\InvalidInputRequestException;
-use App\Application\NewsDownloader\Exception\DownloaderFailureException;
 use App\Application\UseCase\AddNews\AddNewsRequest;
 use App\Application\UseCase\AddNews\AddNewsUseCase;
 use App\Application\UseCase\AddNews\Exception\AddNewsUseCaseException;
