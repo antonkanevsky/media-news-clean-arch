@@ -1,4 +1,7 @@
-FROM php:8.3-fpm-alpine3.21 AS php
+#########################
+### Scratch image ###
+#########################
+FROM php:8.3-fpm-alpine3.21 AS scratch
 
 RUN set -x \
     && apk add --no-cache --virtual .build-deps postgresql-dev \
@@ -25,9 +28,28 @@ RUN set -x \
 
 RUN apk add --no-cache bash
 
+#########################
+### Development image ###
+#########################
+FROM scratch AS development
+
+ARG XDEBUG_ENABLE
+ENV XDEBUG_VERSION 3.3.1
+RUN set -x \
+    && mkdir -p /usr/src/php/ext/xdebug \
+    && curl "https://pecl.php.net/get/xdebug/${XDEBUG_VERSION}" \
+        | tar xvz --directory=/usr/src/php/ext/xdebug --strip=1 \
+    && docker-php-ext-install -j$(nproc) xdebug \
+    && rm -rf /usr/src/php/ext/xdebug
+
+COPY ./docker/xdebug.ini /usr/local/etc/php/xdebug.ini
+RUN \
+if [ "${XDEBUG_ENABLE}" == "1" ] ; \
+  then cp /usr/local/etc/php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini; \
+fi
+
 FROM nginx:1.27-alpine3.21 AS nginx
 
 COPY ops/nginx/symfony.conf.template /etc/nginx/templates/default.conf.template
-#COPY ./public /var/www/html/public
 
 ENV LISTEN_PORT 80

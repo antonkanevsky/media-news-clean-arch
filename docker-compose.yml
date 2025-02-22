@@ -2,7 +2,9 @@ services:
   php:
     build:
       context: .
-      target: php
+      target: development
+      args:
+        - XDEBUG_ENABLE=${XDEBUG_ENABLE:-1}
     container_name: media-app-php
     volumes:
       - .:/var/www/html
