@@ -6,18 +6,24 @@ namespace App\Infrastructure\Repository;
 
 use App\Domain\Entity\News;
 use App\Domain\Repository\NewsRepositoryInterface;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-readonly class NewsRepository implements NewsRepositoryInterface
+/**
+ * @extends ServiceEntityRepository<News>
+ *
+ * @method News[] findAll()
+ */
+class NewsRepository extends ServiceEntityRepository implements NewsRepositoryInterface
 {
-    public function __construct(
-        private EntityManagerInterface $entityManager,
-    ) {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, News::class);
     }
 
     public function save(News $news): void
     {
-        $this->entityManager->persist($news);
-        $this->entityManager->flush();
+        $this->getEntityManager()->persist($news);
+        $this->getEntityManager()->flush();
     }
 }

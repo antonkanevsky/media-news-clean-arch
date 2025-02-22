@@ -9,7 +9,7 @@ class NewsContentExtractor
     public function extract(string $newsContent): NewsContentExtractorResult
     {
         $newsTitle = 'unrecognized title';
-        if (preg_match('#<title>(.+)<\/title>#', $newsContent, $matches)) {
+        if (preg_match('#<title>(.+)</title>#', $newsContent, $matches)) {
             $newsTitle = $matches[1];
         }
 

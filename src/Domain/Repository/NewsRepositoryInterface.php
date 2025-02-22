@@ -9,4 +9,9 @@ use App\Domain\Entity\News;
 interface NewsRepositoryInterface
 {
     public function save(News $news): void;
+
+    /**
+     * @return array<News>
+     */
+    public function findAll(): array;
 }
