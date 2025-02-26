@@ -16,7 +16,7 @@ class NewsListController extends AbstractController
     ) {
     }
 
-    #[Route('api/v1/news', name: 'news_list', format: 'json')]
+    #[Route('api/v1/news', name: 'news_list', methods: ['GET'], format: 'json')]
     public function __invoke(): JsonResponse
     {
         $news = ($this->listUseCase)();

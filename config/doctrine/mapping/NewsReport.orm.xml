@@ -3,13 +3,11 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\Domain\Entity\News" table="news" repository-class="App\Infrastructure\Repository\NewsRepository">
+    <entity name="App\Domain\Entity\NewsReport" table="news_report" repository-class="App\Infrastructure\Repository\NewsReportRepository">
         <id name="id" type="uuid" column="id">
         </id>
 
-        <field name="url" type="string" column="url" length="255" nullable="false"/>
-
-        <field name="title" type="string" column="title" length="255" nullable="false"/>
+        <field name="filePath" type="string" column="file_path" length="255" nullable="false"/>
 
         <field name="createdAt" type="datetime_immutable" column="created_at" nullable="false">
             <options>

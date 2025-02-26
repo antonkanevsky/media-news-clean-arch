@@ -7,25 +7,18 @@ namespace App\Domain\Entity;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class News
+class NewsReport
 {
     private UuidInterface $id;
 
-    private string $url;
-
-    private string $title;
+    private string $filePath;
 
     private \DateTimeImmutable $createdAt;
 
-    public function __construct(string $url, string $title)
+    public function __construct(string $filePath)
     {
         $this->id = Uuid::uuid7();
-
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
-            throw new \InvalidArgumentException('Invalid URL');
-        }
-        $this->url = $url;
-        $this->title = $title;
+        $this->filePath = $filePath;
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -34,14 +27,9 @@ class News
         return $this->id;
     }
 
-    public function getUrl(): string
+    public function getFilePath(): string
     {
-        return $this->url;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
+        return $this->filePath;
     }
 
     public function getCreatedAt(): \DateTimeImmutable

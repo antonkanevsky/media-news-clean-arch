@@ -26,4 +26,14 @@ class NewsRepository extends ServiceEntityRepository implements NewsRepositoryIn
         $this->getEntityManager()->persist($news);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * @param array<string> $ids
+     *
+     * @return array<News>
+     */
+    public function findByIds(array $ids): array
+    {
+        return $this->findBy(['id' => $ids]);
+    }
 }

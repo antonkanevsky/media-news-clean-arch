@@ -14,4 +14,11 @@ interface NewsRepositoryInterface
      * @return array<News>
      */
     public function findAll(): array;
+
+    /**
+     * @param array<string> $ids
+     *
+     * @return array<News>
+     */
+    public function findByIds(array $ids): array;
 }
