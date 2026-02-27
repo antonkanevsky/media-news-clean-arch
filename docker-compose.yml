@@ -2,7 +2,9 @@ services:
   php:
     build:
       context: .
-      target: php
+      target: development
+      args:
+        - XDEBUG_ENABLE=${XDEBUG_ENABLE:-1}
     container_name: media-app-php
     volumes:
       - .:/var/www/html
@@ -16,10 +18,10 @@ services:
     volumes:
       - media-database:/var/lib/postgresql/data/media
     environment:
-      - POSTGRES_USER=app
-      - POSTGRES_PASSWORD=8012345108gY
-      - PGDATA=/var/lib/postgresql/data/media
-      - POSTGRES_DB=media
+      POSTGRES_DB: ${POSTGRES_DB:-media}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-8012345108gY}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+      PGDATA: /var/lib/postgresql/data/media
     ports:
       - 5432:5432
 

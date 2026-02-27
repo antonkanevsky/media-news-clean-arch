@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Отчет по новостям{% endblock %}
+
+{% block body %}
+<ul>
+{% for news in newsList %}
+        <li><a href="{{ news.url }}">{{ news.title }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
